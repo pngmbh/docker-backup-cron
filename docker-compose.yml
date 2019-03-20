@@ -1,0 +1,14 @@
+version: '2.3'
+
+services:
+  backup-cron:
+    build:
+      context: .
+      args:
+        CRON_SCHEDULE: $CRON_SCHEDULE
+        BACKUP_CMD: $BACKUP_CMD
+    volumes:
+      - type: $DATA_TYPE
+        source: $DATA_SOURCE
+        target: /data
+        read_only: true
