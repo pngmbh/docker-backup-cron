@@ -7,17 +7,17 @@ https://quay.io/repository/pngmbh/docker-backup-cron?tab=tags
 ## Basic Usage
 
 ```
-DATA_TYPE=bind \
-DATA_SOURCE=/tmp/backup-test-source \
-CRON_SCHEDULE="* * * * *" \
-BACKUP_CMD="rsync -vah /data /tmp/destination" \
-    docker-compose up --build
+docker run \
+    -e CRON_SCHEDULE="* * * * *" \
+    -v /tmp/backup-test-source:/data:ro \
+    -v /tmp/backup-test-destination:/destination \
+    quay.io/pngmbh/docker-backup-cron:latest \
+    rsync -vah /data/ /destination
 ```
 
-## Environment Variables
+## Config
 
-* `DATA_TYPE` - `bind` or `volume`
-* `DATA_SOURCE` - either a volume name (with type=volume), or a path on the host
-* `BACKUP_CMD` - needs to copy `/data` to wherever you want it
-    * `rsync` and `rclone` are available
 * `CRON_SCHEDULE` - https://crontab.guru/ - something like `0 * * * *`
+* the docker command needs to be something that copies your data
+  to wherever you want it
+    * `rsync` and `rclone` are available

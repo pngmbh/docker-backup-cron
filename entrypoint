@@ -1,0 +1,29 @@
+#!/bin/sh
+
+function log() {
+    echo "$@" | sed "s/^/`date`: /"
+}
+
+set -e
+
+log "command: $@"
+log "cron schedule: $CRON_SCHEDULE"
+
+log "creating command script"
+mkdir -p /opt
+echo "#!/bin/sh" > /opt/runbackup
+echo "$@" >> /opt/runbackup
+chmod +x /opt/runbackup
+log ">>>>>>>>>>>>>>>>>>>"
+log "`cat /opt/runbackup`"
+log "<<<<<<<<<<<<<<<<<<<"
+
+log "installing command in crontab"
+echo "$CRON_SCHEDULE /opt/runbackup" | crontab -
+crontab -l
+
+log "running command once before handing over to normal cron schedule"
+/opt/runbackup
+
+log "command run successfully, executing crond"
+exec crond -f -L /dev/stdout
