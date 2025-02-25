@@ -2,7 +2,7 @@
 
 Copies stuff somewhere else, regularly.
 
-`docker pull ghcr.io/docker-backup-cron`
+`docker pull ghcr.io/pngmbh/docker-backup-cron`
 
 ## Basic Usage
 
