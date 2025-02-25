@@ -2,7 +2,7 @@
 
 Copies stuff somewhere else, regularly.
 
-https://quay.io/repository/pngmbh/docker-backup-cron?tab=tags
+`docker pull ghcr.io/docker-backup-cron`
 
 ## Basic Usage
 
